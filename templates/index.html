@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Magnitudo Gempa Bumi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px 20px 0 0 !important;
+            padding: 20px;
+        }
+        .btn-predict {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.2s;
+        }
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        .form-label {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1>🌍 Prediksi Magnitudo Gempa Bumi</h1>
+                        <p class="mb-0">Menggunakan Jaringan Saraf Tiruan Backpropagation</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-box">
+                            <strong>📌 Informasi:</strong> Masukkan parameter lokasi gempa untuk memprediksi magnitudo gempa.
+                            Model dilatih menggunakan data historis gempa bumi (1965-2016) dari USGS.
+                        </div>
+                        
+                        <form action="/predict" method="POST" class="mt-4">
+                            <div class="mb-3">
+                                <label for="latitude" class="form-label">
+                                    🌐 Latitude (Lintang) 
+                                    <small class="text-muted">-90 hingga 90</small>
+                                </label>
+                                <input type="number" step="any" class="form-control form-control-lg" 
+                                       id="latitude" name="latitude" required 
+                                       placeholder="Contoh: -6.2088">
+                                <div class="form-text">Nilai negatif untuk selatan khatulistiwa</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="longitude" class="form-label">
+                                    🗺️ Longitude (Bujur) 
+                                    <small class="text-muted">-180 hingga 180</small>
+                                </label>
+                                <input type="number" step="any" class="form-control form-control-lg" 
+                                       id="longitude" name="longitude" required 
+                                       placeholder="Contoh: 106.8456">
+                                <div class="form-text">Nilai negatif untuk barat Greenwich</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="depth" class="form-label">
+                                    📏 Depth (Kedalaman dalam km) 
+                                    <small class="text-muted">0 hingga 700 km</small>
+                                </label>
+                                <input type="number" step="any" class="form-control form-control-lg" 
+                                       id="depth" name="depth" required 
+                                       placeholder="Contoh: 10">
+                                <div class="form-text">Semakin dangkal, potensi kerusakan semakin besar</div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-predict">
+                                    🔮 Prediksi Magnitudo
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <small class="text-muted">
+                                Model menggunakan Arsitektur JST: Input(3) → Hidden1(64) → Hidden2(32) → Hidden3(16) → Output(1)<br>
+                                Algoritma: Backpropagation dengan Optimizer Adam & Early Stopping
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
